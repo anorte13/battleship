@@ -1,0 +1,1 @@
+(()=>{"use strict";(function(s){const t={length:5,hits:0,sunk:!1,hit:function(){this.hits+=1,console.log(`Current hits on this ship: ${this.hits}`),this.isSunk()},isSunk:function(){this.hits===this.length&&console.log("This ship has been sunk")}};return t})().hit()})();
