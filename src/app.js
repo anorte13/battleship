@@ -1,4 +1,12 @@
-import { createShips } from "./js/shipFactory";
+const createShip = require("../src/js/shipFactory.js");
 
-const carrier = createShips(5);
-carrier.hit();
+const body = document.getElementById("content");
+const carrier = createShip(5);
+
+const button = document.createElement("button");
+button.textContent = "Hit Me";
+button.addEventListener("click", () => {
+  carrier.hit();
+});
+
+body.appendChild(button);

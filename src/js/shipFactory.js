@@ -1,4 +1,4 @@
-function createShips(length) {
+const createShips = (length) => {
   //Create new ship object
   const ship = {};
 
@@ -15,11 +15,12 @@ function createShips(length) {
   ship.isSunk = function () {
     if (this.hits === this.length) {
       console.log("This ship has been sunk");
+      return true;
     } else {
-      return;
+      return false;
     }
   };
   return ship;
-}
+};
 
-export { createShips };
+module.exports = createShips;

@@ -4,11 +4,12 @@
   "description": "A project that brings the game of battleship to the web.",
   "main": "app.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "test": "jest"
   },
   "author": "Angel Ortega",
   "license": "ISC",
   "devDependencies": {
+    "jest": "^29.5.0",
     "webpack": "^5.82.0",
     "webpack-cli": "^5.1.1"
   }
