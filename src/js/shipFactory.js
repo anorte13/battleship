@@ -4,6 +4,7 @@ const createShips = (length) => {
 
   //Intialize properties of ship
   ship.length = length;
+  ship.name = "";
   ship.hits = 0;
   ship.sunk = false;
 
@@ -15,9 +16,9 @@ const createShips = (length) => {
   ship.isSunk = function () {
     if (this.hits === this.length) {
       console.log("This ship has been sunk");
-      return true;
+      ship.sunk = true;
     } else {
-      return false;
+      ship.sunk = false;
     }
   };
   return ship;
