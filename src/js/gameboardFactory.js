@@ -14,21 +14,24 @@ class Gameboard {
       .map(() => Array(10).fill(null));
   }
   reciveAttack(x, y) {
-    const target = this.board[y][x];
+    let target = this.board[y][x];
 
     if (target === null) {
       console.log("There was no target hit");
       this.missedAttacks.push({ x, y });
     } else if (typeof target === "object") {
-      let ship = this.board[y][x];
-      ship.hit();
-      console.log(ship);
-      console.log("You landed a hit");
+      target.hit();
+      if (target.isSunk()) {
+        target.sunk = true;
+        console.log(`Your ${target.name} has been sunk...`);
+        return;
+      }
     }
   }
+
   placeShip(length, x, y, orientation) {
     const ship = createShip(length);
-    ship.name = returnShipName(length);
+    ship.name = returnShipName(length, this.placedShips);
     if (
       (orientation === "horizontal" && x + length > 10) ||
       (orientation === "vertical" && y + length > 10)
@@ -45,13 +48,11 @@ class Gameboard {
     }
     this.placedShips.push(ship);
   }
+  checkShipSunk() {
+    console.log(this.placedShips);
+  }
 }
-const game = new Gameboard();
-game.placeShip(5, 0, 0, "horizontal");
-game.placeShip(4, 2, 3, "vertical");
-game.placeShip(2, 10, 2, "horizontal");
-game.reciveAttack(0, 0);
-game.reciveAttack(1, 0);
-game.reciveAttack(2, 0);
-game.reciveAttack(3, 0);
-game.reciveAttack(4, 0);
+let gameBoard = new Gameboard();
+gameBoard.placeShip(5, 0, 0, "horizontal");
+
+module.exports = Gameboard;

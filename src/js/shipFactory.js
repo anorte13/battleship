@@ -9,16 +9,18 @@ const createShips = (length) => {
   ship.sunk = false;
 
   ship.hit = function () {
-    this.hits += 1;
-    console.log(`Current hits on this ship: ${this.hits}`);
-    this.isSunk();
+    if (ship.isSunk()) {
+      return false;
+    } else {
+      this.hits += 1;
+      console.log(`Current hits on this ${ship.name} : ${this.hits}`);
+    }
   };
   ship.isSunk = function () {
     if (this.hits === this.length) {
-      console.log("This ship has been sunk");
-      ship.sunk = true;
+      return true;
     } else {
-      ship.sunk = false;
+      return false;
     }
   };
   return ship;
