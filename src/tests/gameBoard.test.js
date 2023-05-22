@@ -1,7 +1,6 @@
 const Gameboard = require("../js/gameboardFactory.js");
-const ships = require("../js/shipFactory.js");
 
-test("Creates a board with approporate amount of game pieces.", () => {
+test("Create a board with approporate amount of game pieces.", () => {
   let arr = [];
   let testBoard = new Gameboard();
   arr = Array(10)
@@ -22,7 +21,7 @@ test("Respond to a missed shot and adds it to array", () => {
   testBoard.reciveAttack(1, 1);
   expect(testBoard.missedAttacks[0]).toMatchObject({ x: 1, y: 1 });
 });
-test("Checks if current ship is sunk", () => {
+test("Check if current ship is sunk", () => {
   let testBoard = new Gameboard();
   testBoard.placeShip(5, 0, 0, "horizontal");
   testBoard.reciveAttack(0, 0);
@@ -31,4 +30,18 @@ test("Checks if current ship is sunk", () => {
   testBoard.reciveAttack(3, 0);
   testBoard.reciveAttack(4, 0);
   expect(testBoard.board[0][0].sunk).toBe(true);
+});
+test("Check to see if all ships have been sunk", () => {
+  let testBoard = new Gameboard();
+  testBoard.placeShip(5, 0, 0, "horizontal");
+  testBoard.placeShip(2, 1, 1, "vertical");
+  testBoard.reciveAttack(0, 0);
+  testBoard.reciveAttack(1, 0);
+  testBoard.reciveAttack(2, 0);
+  testBoard.reciveAttack(3, 0);
+  testBoard.reciveAttack(4, 0);
+  testBoard.reciveAttack(1, 1);
+  testBoard.reciveAttack(2, 1);
+  testBoard.reciveAttack(1, 2);
+  expect(testBoard.checkShipSunk()).toBe(true);
 });
