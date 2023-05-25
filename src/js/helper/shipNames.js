@@ -4,9 +4,7 @@ const returnShipName = (length, arr) => {
   } else if (length === 4) {
     return "Battleship";
   } else if (length === 3) {
-    for (let i = 0; i < arr.length; i++) {
-      console.log(arr[i]);
-    }
+    return "Submarine";
   } else {
     return "Destroyer";
   }

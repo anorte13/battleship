@@ -8,17 +8,19 @@ class Gameboard {
     this.placedShips = [];
     if (!this.board.length) this.createBoard();
   }
+  // Creates a 10 x 10 gameboard
   createBoard() {
     this.board = Array(10)
       .fill(null)
       .map(() => Array(10).fill(null));
   }
-  reciveAttack(x, y) {
-    let target = this.board[y][x];
+  reciveAttack(x, y, board) {
+    let target = board[y][x];
 
     if (target === null) {
-      console.log("There was no target hit");
+      console.log("There was no target hit!");
       this.missedAttacks.push({ x, y });
+      return false;
     } else if (typeof target === "object") {
       target.hit();
       if (target.isSunk()) {
@@ -26,13 +28,13 @@ class Gameboard {
         console.log(`Your ${target.name} has been sunk...`);
         return;
       }
+      return true;
     }
   }
 
-  placeShip(length, x, y, orientation) {
-    const ship = createShip(length);
+  placeShip(length, x, y, orientation, gameboard) {
+    let ship = createShip(length);
     ship.name = returnShipName(length, this.placedShips);
-
     // Check if ship is within the boundries
     if (
       (orientation === "horizontal" && x + length > 10) ||
@@ -44,8 +46,8 @@ class Gameboard {
     // Check if ship placement overlaps existing ships
     for (let i = 0; i < length; i++) {
       if (
-        (orientation === "horizontal" && this.board[y][x + i] !== null) ||
-        (orientation === "vertical" && this.board[y + i][x] !== null)
+        (orientation === "horizontal" && gameboard[y][x + i] !== null) ||
+        (orientation === "vertical" && gameboard[y + i][x] !== null)
       ) {
         console.log("Ship is already placed in those coordinates");
         return false;
@@ -54,9 +56,9 @@ class Gameboard {
     // Place ship on board
     for (let i = 0; i < length; i++) {
       if (orientation === "horizontal") {
-        this.board[y][x + i] = ship;
+        gameboard[y][x + i] = ship;
       } else {
-        this.board[y + i][x] = ship;
+        gameboard[y + i][x] = ship;
       }
     }
     this.placedShips.push(ship);
@@ -66,17 +68,4 @@ class Gameboard {
     return this.placedShips.every((ship) => ship.sunk);
   }
 }
-let gameBoard = new Gameboard();
-gameBoard.placeShip(5, 0, 0, "horizontal");
-gameBoard.placeShip(2, 1, 1, "vertical");
-gameBoard.reciveAttack(0, 0);
-gameBoard.reciveAttack(1, 0);
-gameBoard.reciveAttack(2, 0);
-gameBoard.reciveAttack(3, 0);
-gameBoard.reciveAttack(4, 0);
-console.log(gameBoard.checkShipSunk());
-gameBoard.reciveAttack(1, 1);
-gameBoard.reciveAttack(2, 1);
-gameBoard.reciveAttack(1, 2);
-console.log(gameBoard.checkShipSunk());
 module.exports = Gameboard;
